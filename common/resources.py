@@ -1,4 +1,6 @@
 import boto3
+from dotenv import load_dotenv
+import os
 
 class Boto3Connector(object):
     def __init__(self,aws_access_key_id, aws_secret_access_key, endpoint_url):
@@ -19,8 +21,8 @@ class Boto3Connector(object):
         return s3_client
     
 def boto3_connection(context):
-    return Boto3Connector(
-        context.resource_config["aws_access_key_id"],
-        context.resource_config["aws_secret_access_key"],
-        context.resource_config["endpoint_url"],
-    )
+    aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
+    aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+    endpoint_url = os.getenv("ENDPOINT_URL")
+    
+    return Boto3Connector(aws_access_key_id, aws_secret_access_key, endpoint_url)
